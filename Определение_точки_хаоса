@@ -1,0 +1,24 @@
+import matplotlib.pyplot as plt
+def fx(n, r, x0):
+        y = [x0]
+        def f(x):
+            y = 4 * r * x * (1 - x)
+            return y
+        for i in range(int(n) - 1):
+            y.append(f(y[-1]))
+        g = y[-1]
+        return g
+def re(n, r, x0):
+    a = []
+    k = []
+    while r <= 1:
+        k.append(fx(n, r, x0))
+        a.append(r)
+        r += 0.001
+    return k, a
+n=700
+for i in range(300):
+    x, y = re(n, 0.1, 0.5)
+    n+=1
+    plt.plot(y, x, 'ko', markersize=0.02)
+plt.show()
