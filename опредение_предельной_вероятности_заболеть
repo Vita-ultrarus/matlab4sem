@@ -1,0 +1,48 @@
+import math as m
+import random
+import math as m
+import random
+import matplotlib.pyplot as plt
+from multiprocessing import Process, Pool
+import numpy
+def monte_karlo(p,n,k):
+    N=1000
+    today=0
+    yesterday=0
+    ill=[]
+    #day=[]
+    for i in range(k):
+        yesterday=today
+        today=0
+        #day.append(i+1)
+        for i in range(N-n):
+            x=random.uniform(0,1)
+            if x<(1-(1-p)**n):
+                today+=1
+        ill.append(n)
+        n+=today
+        n=n-yesterday
+    return ill[-1]
+
+def frange(x, y, jump):
+    while x < y:
+        yield x
+        x += jump
+
+
+
+if __name__ == '__main__':
+
+
+
+    pool = Pool(processes=4)
+    arr1 = [pool.apply_async(monte_karlo, args=(i, 1, 100)) for i in frange(0.001, 0.01, 0.001)]
+    arr = [g.get() for g in arr1]
+
+
+    prob=[i for i in frange(0.001,0.01,0.001)]
+
+
+
+    plt.plot(prob, arr)
+    plt.show()
